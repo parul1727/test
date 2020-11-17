@@ -67,18 +67,15 @@ class App extends React.Component {
       id: `item-${d.id}`,
       content: (
           <StyledItem>
-            <StyledItemInput
-              type="text"
-              placeholder={d.placeholder}
-              value={d.value}
-              onChange={(e) => {
-                const data = this.state.data;
-                const dt = data.find(dt => dt.id === d.id);
-                dt.value = e.target.value;
-                this.setState({ data });
-                this.updateItems();
-              }}
-            />
+            <StyledItemDiv contentEditable="true" onBlur={(e) => {
+              const data = this.state.data;
+              const dt = data.find(dt => dt.id === d.id);
+              dt.value = e.target.value;
+              this.setState({ data });
+              this.updateItems();
+            }}>
+              {d.placeholder}
+            </StyledItemDiv>
             <div onClick={(e) => this.handleDelete(e, d)}><Close /></div>
           </StyledItem>
       ),
@@ -310,7 +307,7 @@ const StyledItem = styled.div`
   }
 `;
 
-const StyledItemInput = styled.input`
+const StyledItemDiv = styled.div`
   height: auto;
   width: 90%;
   font-size: ${p => p.theme.font16};
